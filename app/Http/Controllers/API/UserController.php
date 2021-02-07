@@ -30,7 +30,6 @@ class UserController extends Controller
             $message = $ex->getMessage();
         }
 
-        // response
         $response = [
             'success' => $success,
             'message' => $message,
@@ -43,16 +42,8 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        // $credentials = [
-        //     'email' => $request->email,
-        //     'password' => $request->password,
-        // ];
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $remember = true)) {
-          // $user = User::where('email',$credentials['email'])->first();
-          // dd($user->name);
-          // Auth::login($user);
-          // Auth::loginUsingId($user->id, $remember = true);
             $request->session()->regenerate();
             $success = true;
             $message = 'User login successfully';
@@ -60,13 +51,10 @@ class UserController extends Controller
             $success = false;
             $message = 'Unauthorised';
         }
-// dd(Auth::guard());
-        // response
         $response = [
             'success' => $success,
             'message' => $message,
             'status' => Auth::check(),
-
         ];
 
         return response()->json($response);
@@ -78,7 +66,6 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         try {
-            // Session::flush();
             Auth::logout();
             $request->session()->flush();
             $success = true;
@@ -88,36 +75,9 @@ class UserController extends Controller
             $message = $ex->getMessage();
         }
 
-        // response
         $response = [
             'success' => $success,
             'message' => $message,
-        ];
-        return response()->json($response);
-    }
-
-    /**
-     * Sanctum
-     */
-    public function sanctum()
-    {
-        // response
-        $response = [
-            'success' => true,
-            'message' => 'test',
-        ];
-        return response()->json($response);
-    }
-
-    /**
-     * Books
-     */
-    public function books()
-    {
-        // response
-        $response = [
-            'success' => true,
-            'status' => Auth::check(),
         ];
         return response()->json($response);
     }

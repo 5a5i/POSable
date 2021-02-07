@@ -6,16 +6,17 @@ import VueRouter from 'vue-router';
 import {routes} from './routes';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-// import VueResource from 'vue-resource';
+import moment from 'moment';
 
 Vue.use(VueRouter);
-// Vue.use(VueResource);
 Vue.prototype.axios = axios;
 Vue.use(VueAxios, axios);
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('MM/DD/YYYY hh:mm')
+  }
+});
 
 const router = new VueRouter({
   mode: 'history',

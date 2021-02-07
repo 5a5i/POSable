@@ -55,7 +55,7 @@
         methods: {
             addDeveloper() {
                 this.axios
-                    .post('http://127.0.0.1:8000/api/developer/add', this.developer)
+                    .post(`/api/developer/add`, this.developer)
                     .then(response => (
                         this.$router.push({name: 'home'})
                     ))

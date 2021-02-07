@@ -22,8 +22,10 @@
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" v-model="password"
-                                           required autocomplete="off">
+                                    <input id="password" type="password" class="form-control" v-model="password" required autocomplete="off"><br>
+                                <router-link :to="{ name: 'direct-reset-password' }" class="small ml-auto my-auto">
+                                  Forgot Password, Reset?
+                                </router-link>
                                 </div>
                             </div>
 
@@ -56,8 +58,7 @@ export default {
             e.preventDefault()
             if (this.password.length > 0) {
                 axios.get('/sanctum/csrf-cookie').then(response => {
-
-                    axios.post('api/login', {
+                    axios.post('/api/login', {
                         email: this.email,
                         password: this.password,
                     }).then(response => {

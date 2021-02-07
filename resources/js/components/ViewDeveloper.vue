@@ -49,7 +49,7 @@
         },
         created() {
             this.axios
-                .get(`http://127.0.0.1:8000/api/developer/view/${this.$route.params.id}`)
+                .get(`/api/developer/view/${this.$route.params.id}`)
                 .then((response) => {
                     this.developer = response.data;
                 });
@@ -57,7 +57,7 @@
         methods: {
             deleteDeveloper(id) {
                 this.axios
-                    .delete(`http://127.0.0.1:8000/api/developer/delete/${id}`, this.developer)
+                    .delete(`/api/developer/delete/${id}`, this.developer)
                     .then((response) => {
                         this.$router.push({name: 'home'});
                     });

@@ -65,7 +65,7 @@ export default {
             e.preventDefault()
             if (this.password.length > 0) {
                 axios.get('/sanctum/csrf-cookie').then(response => {
-                    axios.post('api/register', {
+                    axios.post('/api/register', {
                         name: this.name,
                         email: this.email,
                         password: this.password

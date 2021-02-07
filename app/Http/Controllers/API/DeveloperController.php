@@ -96,9 +96,9 @@ class DeveloperController extends Controller
            $name = time().'.' . explode('/', explode(':', substr($avatar, 0, strpos($avatar, ';')))[1])[1];
            \Image::make($avatar)->save(public_path('images/').$name);
            $oldAvatar = $developer->avatar;
-           $userAvatar = public_path('images/').$oldAvatar;
-           if(file_exists($userAvatar)) {
-               @unlink($userAvatar);
+           $developerAvatar = public_path('images/').$oldAvatar;
+           if(file_exists($developerAvatar)) {
+               @unlink($developerAvatar);
            }
            $developer->avatar = $name;
            $developer->save();
@@ -111,13 +111,40 @@ class DeveloperController extends Controller
     {
         $developer = Developers::findOrFail($id);
         $avatar = $developer->avatar;
-        $userAvatar = public_path('images/').$avatar;
-        if(file_exists($userAvatar)) {
-            @unlink($userAvatar);
+        $developerAvatar = public_path('images/').$avatar;
+        if(file_exists($developerAvatar)) {
+            @unlink($developerAvatar);
         }
         $developer->delete();
         return [
-         'message' => 'Photo deleted successfully'
+         'message' => 'Developer deleted successfully'
         ];
+    }
+
+    public function multipleDelete(Request $request)
+    {
+        // dd($request->ids);
+       // $single_user_id = explode(',' , $id);
+       $developers = Developers::whereIn('id',$request->ids)->get();
+       foreach($developers as $developer) {
+         // dd($developer->avatar);
+         $developerAvatar = public_path('images/').$developer->avatar;
+         if(file_exists($developerAvatar)) {
+             @unlink($developerAvatar);
+         }
+       }
+       Developers::whereIn('id',$request->ids)->delete();
+
+       return [
+        'message' => 'Developers deleted successfully'
+       ];
+
+    }
+
+    public function developerList()
+    {
+        return response()->json([
+            'developers' => Developers::latest()->get()
+        ], Response::HTTP_OK);
     }
 }

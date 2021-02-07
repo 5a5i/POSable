@@ -51,7 +51,7 @@
         },
         created() {
             this.axios
-                .get(`http://127.0.0.1:8000/api/developer/view/${this.$route.params.id}`)
+                .get(`/api/developer/view/${this.$route.params.id}`)
                 .then((response) => {
                     this.developer = response.data
                 });
@@ -59,7 +59,7 @@
         methods: {
             updateDeveloper() {
                 this.axios
-                    .post(`http://127.0.0.1:8000/api/developer/update/${this.$route.params.id}`, this.developer)
+                    .post(`/api/developer/update/${this.$route.params.id}`, this.developer)
                     .then((response) => {
                         this.$router.push({name: 'home'})
                     })

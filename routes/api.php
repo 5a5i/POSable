@@ -19,4 +19,10 @@ Route::group(['prefix' => 'developer', 'middleware' => ['web']], function () {
     Route::get('edit/{id}', [App\Http\Controllers\API\DeveloperController::class, 'show']);
     Route::post('update/{id}', [App\Http\Controllers\API\DeveloperController::class, 'update']);
     Route::delete('delete/{id}', [App\Http\Controllers\API\DeveloperController::class, 'destroy']);
+    Route::post('multiple/delete', [App\Http\Controllers\API\DeveloperController::class, 'multipleDelete']);
+    Route::post('list', [App\Http\Controllers\API\DeveloperController::class, 'developerList']);
 });
+
+Route::post('reset-password', [App\Http\Controllers\API\AuthController::class, 'sendPasswordResetLink']);
+Route::post('reset/password', [App\Http\Controllers\API\AuthController::class, 'callResetPassword']);
+Route::post('direct/reset/password', [App\Http\Controllers\API\AuthController::class, 'directResetPassword']);
